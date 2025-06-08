@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigiHelp – WebAssembly Powered Lessons</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      padding: 2em;
+      background: linear-gradient(120deg, #dfe9f3 0%, #ffffff 100%);
+      color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 2.5rem;
+      margin-bottom: 0.5em;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2em;
+    }
+    .lesson-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1em;
+      margin-bottom: 2em;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    #lesson {
+      background-color: white;
+      padding: 1.5em;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      width: 90%;
+      max-width: 700px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌐 DigiHelp – Learn Digital Skills</h1>
+  <p>Click a button below to read a digital literacy lesson powered by C++ and WebAssembly:</p>
+
+  <div class="lesson-buttons">
+    <button onclick="showLesson('whatsappLesson')">📲 WhatsApp Lesson</button>
+    <button onclick="showLesson('callLesson')">📞 Phone Call Lesson</button>
+    <button onclick="showLesson('upiLesson')">💸 UPI Payment Lesson</button>
+    <button onclick="showLesson('safetyLesson')">🔐 Safety Tips</button>
+  </div>
+
+  <div id="lesson">Lesson will appear here...</div>
+
+  <script src="digital.js"></script>
+  <script>
+    Module.onRuntimeInitialized = () => {
+      console.log("WebAssembly loaded!");
+    };
+
+    function showLesson(funcName) {
+      const result = Module.ccall(funcName, "string", [], []);
+      document.getElementById("lesson").innerText = result;
+    }
+  </script>
+</body>
+</html>
