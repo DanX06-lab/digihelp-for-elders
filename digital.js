@@ -445,7 +445,6 @@ function unexportedRuntimeSymbol(sym) {
     });
   }
 }
-
 // end include: runtime_debug.js
 // include: memoryprofiler.js
 // end include: memoryprofiler.js
