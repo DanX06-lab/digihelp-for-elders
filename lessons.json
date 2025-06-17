@@ -1,0 +1,22 @@
+{
+  "whatsapp": {
+    "en": "1. Open WhatsApp\n2. Tap contact\n3. Type your message\n4. Press Send.",
+    "hi": "1. WhatsApp खोलें\n2. संपर्क चुनें\n3. संदेश लिखें\n4. भेजें दबाएं।",
+    "bn": "1. WhatsApp খুলুন\n2. কনট্যাক্ট বেছে নিন\n3. মেসেজ লিখুন\n4. সেন্ড চাপুন।"
+  },
+  "call": {
+    "en": "1. Open Phone app\n2. Dial or select a contact\n3. Tap the call button.",
+    "hi": "1. फ़ोन ऐप खोलें\n2. नंबर डायल करें या संपर्क चुनें\n3. कॉल बटन दबाएं।",
+    "bn": "1. ফোন অ্যাপ খুলুন\n2. নম্বর ডায়াল করুন অথবা কনট্যাক্ট বেছে নিন\n3. কল চাপুন।"
+  },
+  "upi": {
+    "en": "1. Open UPI app\n2. Enter number or scan QR\n3. Enter amount\n4. Enter PIN to pay.",
+    "hi": "1. UPI ऐप खोलें\n2. नंबर डालें या QR स्कैन करें\n3. राशि दर्ज करें\n4. भुगतान के लिए PIN डालें।",
+    "bn": "1. UPI অ্যাপ খুলুন\n2. নম্বর দিন বা QR স্ক্যান করুন\n3. টাকা লিখুন\n4. PIN দিন।"
+  },
+  "safety": {
+    "en": "1. Never share your OTP\n2. Use trusted apps only\n3. Don't click unknown links.",
+    "hi": "1. अपना OTP कभी साझा न करें\n2. केवल विश्वसनीय ऐप्स का उपयोग करें\n3. अज्ञात लिंक पर क्लिक न करें।",
+    "bn": "1. OTP কখনও শেয়ার করবেন না\n2. শুধু ভরসাযোগ্য অ্যাপ ব্যবহার করুন\n3. অপরিচিত লিঙ্কে ক্লিক করবেন না।"
+  }
+}
