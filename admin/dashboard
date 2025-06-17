@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard – DigiHelp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212;
+      color: #f5f5f5;
+      padding: 2rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1e1e1e;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #2575fc;
+    }
+    button {
+      padding: 6px 12px;
+      border: none;
+      background-color: #2575fc;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+    .add-form {
+      background: #1e1e1e;
+      padding: 1.5rem;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+    }
+    .add-form h3 {
+      text-align: center;
+    }
+    .add-form input, .add-form textarea, .add-form select {
+      width: 100%;
+      padding: 10px;
+      margin: 0.5rem 0;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 5px;
+      color: white;
+    }
+    .add-form button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome, Admin 👋</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Lesson</th>
+        <th>Languages</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="lesson-table">
+      <tr>
+        <td>WhatsApp</td>
+        <td>en, hi, bn</td>
+        <td>
+          <button onclick="editLesson('whatsapp')">Edit</button>
+          <button onclick="deleteLesson('whatsapp')">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Phone Call</td>
+        <td>en, hi, bn</td>
+        <td>
+          <button onclick="editLesson('call')">Edit</button>
+          <button onclick="deleteLesson('call')">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>UPI</td>
+        <td>en, hi, bn</td>
+        <td>
+          <button onclick="editLesson('upi')">Edit</button>
+          <button onclick="deleteLesson('upi')">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Safety</td>
+        <td>en, hi, bn</td>
+        <td>
+          <button onclick="editLesson('safety')">Edit</button>
+          <button onclick="deleteLesson('safety')">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="add-form">
+    <h3>Add / Edit Lesson</h3>
+    <select id="lesson-id">
+      <option value="whatsapp">WhatsApp</option>
+      <option value="call">Phone Call</option>
+      <option value="upi">UPI</option>
+      <option value="safety">Safety</option>
+    </select>
+    <textarea id="content-en" placeholder="English content"></textarea>
+    <textarea id="content-hi" placeholder="Hindi content"></textarea>
+    <textarea id="content-bn" placeholder="Bengali content"></textarea>
+    <button onclick="saveLesson()">Save Lesson</button>
+  </div>
+
+  <script>
+    function editLesson(id) {
+    document.getElementById('lesson-id').value = id;
+
+    fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/en`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('content-en').value = data.content || '';
+      });
+
+    fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/hi`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('content-hi').value = data.content || '';
+      });
+
+    fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/bn`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('content-bn').value = data.content || '';
+      });
+  }
+
+    function deleteLesson(id) {
+  if (!confirm(`Delete lesson: ${id}?`)) return;
+
+  fetch(`https://digihelp-for-elders.onrender.com/admin/delete/${id}`, {
+    method: 'DELETE'
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message || 'Deleted.');
+      location.reload(); // optional: refresh to update the table
+    })
+    .catch(err => {
+      alert('Failed to delete lesson.');
+      console.error(err);
+    });
+}
+
+
+    function saveLesson() {
+  const id = document.getElementById('lesson-id').value;
+  const en = document.getElementById('content-en').value;
+  const hi = document.getElementById('content-hi').value;
+  const bn = document.getElementById('content-bn').value;
+
+  fetch('https://digihelp-for-elders.onrender.com/admin/save', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id,
+      content: { en, hi, bn }
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message || 'Saved!');
+    })
+    .catch(err => {
+      alert('Failed to save lesson.');
+      console.error(err);
+    });
+}
+
+  </script>
+</body>
+</html>
