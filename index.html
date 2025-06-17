@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DigiHelp – WebAssembly Powered Lessons</title>
+  <title>DigiHelp – Learn Digital Skills</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -47,7 +47,7 @@
       transform: translateY(-3px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-    #lesson {
+    #lesson-container {
       background-color: white;
       padding: 1.5em;
       border-radius: 12px;
@@ -60,61 +60,67 @@
       white-space: pre-wrap;
       margin-bottom: 2em;
     }
-    .video-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5em;
-    }
     video {
       width: 100%;
       max-width: 700px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-top: 1.5em;
     }
   </style>
 </head>
 <body>
   <h1>🌐 DigiHelp – Learn Digital Skills</h1>
-  <p>Click a button below to read a digital literacy lesson powered by C++ and WebAssembly:</p>
+  <p>Click a button below to read a digital literacy lesson and watch the video:</p>
 
   <div class="lesson-buttons">
-    <button onclick="showLesson('whatsappLesson')">📲 WhatsApp Lesson</button>
-    <button onclick="showLesson('callLesson')">📞 Phone Call Lesson</button>
-    <button onclick="showLesson('upiLesson')">💸 UPI Payment Lesson</button>
-    <button onclick="showLesson('safetyLesson')">🔐 Safety Tips</button>
+    <button onclick="showLesson('whatsapp')">📲 WhatsApp Lesson</button>
+    <button onclick="showLesson('call')">📞 Phone Call Lesson</button>
+    <button onclick="showLesson('upi')">💸 UPI Payment Lesson</button>
+    <button onclick="showLesson('safety')">🔐 Safety Tips</button>
   </div>
 
-  <div id="lesson">Lesson will appear here...</div>
-
-  <div class="video-container">
-    <video controls>
-      <source src="video/whatsapp.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <video controls>
-      <source src="video/phonecall.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <video controls>
-      <source src="video/upi.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <video controls>
-      <source src="video/safety.mp4" type="video/mp4">
+  <div id="lesson-container">
+    <div id="lesson">Lesson will appear here...</div>
+    <video id="lesson-video" controls style="display:none;">
+      <source id="video-source" src="" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
 
-  <script src="digital.js"></script>
   <script>
-    Module.onRuntimeInitialized = () => {
-      console.log("WebAssembly loaded!");
-    };
+    function showLesson(lessonType) {
+      fetch(`/lesson/${lessonType}`)
+        .then(res => res.json())
+        .then(data => {
+          // Show text
+          document.getElementById("lesson").innerText = data.content || "Lesson not found.";
 
-    function showLesson(funcName) {
-      const result = Module.ccall(funcName, "string", [], []);
-      document.getElementById("lesson").innerText = result;
+          // Show correct video
+          const video = document.getElementById("lesson-video");
+          const source = document.getElementById("video-source");
+
+          // Set video file name
+          const videoMap = {
+            "whatsapp": "whatsapp.mp4",
+            "call": "phonecall.mp4",
+            "upi": "upi.mp4",
+            "safety": "safety.mp4"
+          };
+
+          const videoFile = videoMap[lessonType];
+          if (videoFile) {
+            source.src = `video/${videoFile}`;
+            video.style.display = "block";
+            video.load();  // Reload new video
+          } else {
+            video.style.display = "none";
+          }
+        })
+        .catch(err => {
+          document.getElementById("lesson").innerText = "Failed to load lesson.";
+          console.error(err);
+        });
     }
   </script>
 </body>
