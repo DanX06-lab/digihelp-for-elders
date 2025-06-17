@@ -90,7 +90,7 @@
 
   <script>
     function showLesson(lessonType) {
-      fetch(`/lesson/${lessonType}`)
+      fetch('https://digihelp-for-elders.onrender.com/lesson/' + lessonType)
         .then(res => res.json())
         .then(data => {
           // Show text
