@@ -62,14 +62,16 @@
     .lesson-card:hover {
       transform: translateY(-8px);
     }
-    .lesson-card button {
+    .lesson-card a {
+      display: inline-block;
       margin-top: 1rem;
       padding: 10px 20px;
       border: none;
       background: #2575fc;
       color: white;
       border-radius: 30px;
-      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
     }
     .contact {
       display: flex;
@@ -144,26 +146,21 @@
     <div class="lessons">
       <div class="lesson-card">
         <h3>WhatsApp</h3>
-        <button onclick="showLesson('whatsapp')">View Lesson</button>
+        <a href="lessons/whatsapp.html">View Lesson</a>
       </div>
       <div class="lesson-card">
         <h3>Phone Call</h3>
-        <button onclick="showLesson('call')">View Lesson</button>
+        <a href="lessons/call.html">View Lesson</a>
       </div>
       <div class="lesson-card">
         <h3>UPI Payment</h3>
-        <button onclick="showLesson('upi')">View Lesson</button>
+        <a href="lessons/upi.html">View Lesson</a>
       </div>
       <div class="lesson-card">
         <h3>Safety Tips</h3>
-        <button onclick="showLesson('safety')">View Lesson</button>
+        <a href="lessons/safety.html">View Lesson</a>
       </div>
     </div>
-    <div id="lesson-result">Click a lesson to see content...</div>
-    <video id="lesson-video" controls style="display:none;">
-      <source id="video-source" src="" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
   </section>
 
   <section id="contact">
@@ -186,35 +183,6 @@
   <footer>
     &copy; 2025 DigiHelp | Built by <strong>Souvik Biswas</strong> | Powered by <strong>X Hunters</strong>
   </footer>
-
-  <script>
-    function showLesson(type) {
-      const lang = document.getElementById("language").value;
-      const resultBox = document.getElementById("lesson-result");
-      const video = document.getElementById("lesson-video");
-      const source = document.getElementById("video-source");
-
-      fetch(`https://digihelp-for-elders.onrender.com/lesson/${type}/${lang}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.content) {
-            resultBox.innerText = data.content;
-          } else {
-            resultBox.innerText = "Lesson not found.";
-          }
-        })
-        .catch(err => {
-          resultBox.innerText = "Failed to load lesson.";
-          console.error(err);
-        });
-
-      // Set video path based on lesson and language
-      const videoPath = `video/${type}_${lang}.mp4`;
-      source.src = videoPath;
-      video.load();
-      video.style.display = "block";
-    }
-  </script>
 
 </body>
 </html>
