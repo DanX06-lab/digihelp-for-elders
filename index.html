@@ -1,152 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DigiHelp – Learn Digital Skills</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
-      padding: 2em;
-      background: linear-gradient(120deg, #dfe9f3 0%, #ffffff 100%);
-      color: #2c3e50;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      background-color: #121212;
+      color: #f5f5f5;
+      scroll-behavior: smooth;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5em;
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
     }
-    p {
+    .hero {
+      text-align: center;
+      padding-top: 150px;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
       font-size: 1.2rem;
-      margin-bottom: 1em;
+      opacity: 0.7;
     }
-    .lesson-buttons {
+    .language-select {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .language-select select {
+      padding: 10px;
+      background: #222;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .lessons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1em;
-      margin-bottom: 2em;
+      gap: 2rem;
+      margin-top: 3rem;
     }
-    button, select {
-      padding: 12px 20px;
-      font-size: 1rem;
-      font-weight: 600;
+    .lesson-card {
+      background: #1e1e1e;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 260px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .lesson-card:hover {
+      transform: translateY(-8px);
+    }
+    .lesson-card button {
+      margin-top: 1rem;
+      padding: 10px 20px;
       border: none;
+      background: #2575fc;
+      color: white;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    button {
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      color: white;
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4rem;
+      justify-content: center;
     }
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    .contact-info, .contact-form {
+      flex: 1 1 300px;
     }
-    #lesson-container {
-      background-color: white;
-      padding: 1.5em;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      width: 90%;
-      max-width: 700px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      margin-bottom: 2em;
-    }
-    video {
+    .contact-form input, .contact-form textarea {
       width: 100%;
-      max-width: 700px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-top: 1.5em;
+      padding: 10px;
+      margin-bottom: 1rem;
+      background: #222;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 5px;
     }
-    #language-selector {
-      margin-bottom: 1.5em;
+    .contact-form button {
+      padding: 10px 20px;
+      background: #2575fc;
+      border: none;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+    #lesson-result {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #1e1e1e;
+      border-radius: 8px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
-  <h1>🌐 DigiHelp – Learn Digital Skills</h1>
-  <p>Select a language and click a button to read and watch:</p>
 
-  <div id="language-selector">
-    <label for="language">🌐 Language: </label>
-    <select id="language">
-      <option value="en">English</option>
-      <option value="hi">हिन्दी</option>
-      <option value="bn">বাংলা</option>
-    </select>
-  </div>
+  <section class="hero">
+    <h1>DigiHelp</h1>
+    <p>Learn Digital Skills in Your Language</p>
+    <div class="language-select">
+      <label for="language">🌐 Language:</label>
+      <select id="language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="bn">বাংলা</option>
+      </select>
+    </div>
+  </section>
 
-  <div class="lesson-buttons">
-    <button onclick="showLesson('whatsapp')">📲 WhatsApp</button>
-    <button onclick="showLesson('call')">📞 Phone Call</button>
-    <button onclick="showLesson('upi')">💸 UPI Payment</button>
-    <button onclick="showLesson('safety')">🔐 Safety Tips</button>
-  </div>
+  <section id="lessons">
+    <h2 style="text-align:center;">Lessons</h2>
+    <div class="lessons">
+      <div class="lesson-card">
+        <h3>WhatsApp</h3>
+        <button onclick="showLesson('whatsapp')">View Lesson</button>
+      </div>
+      <div class="lesson-card">
+        <h3>Phone Call</h3>
+        <button onclick="showLesson('call')">View Lesson</button>
+      </div>
+      <div class="lesson-card">
+        <h3>UPI Payment</h3>
+        <button onclick="showLesson('upi')">View Lesson</button>
+      </div>
+      <div class="lesson-card">
+        <h3>Safety Tips</h3>
+        <button onclick="showLesson('safety')">View Lesson</button>
+      </div>
+    </div>
+    <div id="lesson-result">Click a lesson to see content...</div>
+  </section>
 
-  <div id="lesson-container">
-    <div id="lesson">Lesson will appear here...</div>
-    <video id="lesson-video" controls style="display:none;">
-      <source id="video-source" src="" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+  <section id="contact">
+    <h2 style="text-align:center;">Contact</h2>
+    <div class="contact">
+      <div class="contact-info">
+        <p><strong>Address:</strong><br/> Kolkata, India</p>
+        <p><strong>Phone:</strong><br/> +91 9674947239</p>
+        <p><strong>Email:</strong><br/> support@digihelp.in</p>
+      </div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <textarea rows="5" placeholder="Your Message"></textarea>
+        <button>Send Message</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 DigiHelp | Built by <strong>Souvik Biswas</strong> | Powered by <strong>X Hunters</strong>
+  </footer>
 
   <script>
-    function showLesson(lessonType) {
+    function showLesson(type) {
       const lang = document.getElementById("language").value;
+      const resultBox = document.getElementById("lesson-result");
 
-      fetch(`https://digihelp-for-elders.onrender.com/lesson/${lessonType}/${lang}`)
+      fetch(`https://digihelp-for-elders.onrender.com/lesson/${type}/${lang}`)
         .then(res => res.json())
         .then(data => {
-          document.getElementById("lesson").innerText = data.content || "Lesson not found.";
-
-          const video = document.getElementById("lesson-video");
-          const source = document.getElementById("video-source");
-
-          // Video per language (fallback to English if needed)
-          const videoMap = {
-            "whatsapp": {
-              "en": "whatsapp_en.mp4",
-              "hi": "whatsapp_hi.mp4",
-              "bn": "whatsapp_bn.mp4"
-            },
-            "call": {
-              "en": "phonecall_en.mp4",
-              "hi": "phonecall_hi.mp4",
-              "bn": "phonecall_bn.mp4"
-            },
-            "upi": {
-              "en": "upi_en.mp4",
-              "hi": "upi_hi.mp4",
-              "bn": "upi_bn.mp4"
-            },
-            "safety": {
-              "en": "safety_en.mp4",
-              "hi": "safety_hi.mp4",
-              "bn": "safety_bn.mp4"
-            }
-          };
-
-          const videoFile = videoMap[lessonType]?.[lang] || videoMap[lessonType]["en"];
-          source.src = `video/${videoFile}`;
-          video.style.display = "block";
-          video.load();
+          if (data.content) {
+            resultBox.innerText = data.content;
+          } else {
+            resultBox.innerText = "Lesson not found.";
+          }
         })
         .catch(err => {
-          document.getElementById("lesson").innerText = "Failed to load lesson.";
+          resultBox.innerText = "Failed to load lesson.";
           console.error(err);
         });
     }
   </script>
+
 </body>
 </html>
