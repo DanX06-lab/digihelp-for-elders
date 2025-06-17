@@ -114,6 +114,14 @@
       margin-right: auto;
       white-space: pre-line;
     }
+    #lesson-video {
+      display: block;
+      margin: 2rem auto;
+      max-width: 720px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -152,6 +160,10 @@
       </div>
     </div>
     <div id="lesson-result">Click a lesson to see content...</div>
+    <video id="lesson-video" controls style="display:none;">
+      <source id="video-source" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </section>
 
   <section id="contact">
@@ -179,6 +191,8 @@
     function showLesson(type) {
       const lang = document.getElementById("language").value;
       const resultBox = document.getElementById("lesson-result");
+      const video = document.getElementById("lesson-video");
+      const source = document.getElementById("video-source");
 
       fetch(`https://digihelp-for-elders.onrender.com/lesson/${type}/${lang}`)
         .then(res => res.json())
@@ -193,6 +207,12 @@
           resultBox.innerText = "Failed to load lesson.";
           console.error(err);
         });
+
+      // Set video path based on lesson and language
+      const videoPath = `video/${type}_${lang}.mp4`;
+      source.src = videoPath;
+      video.load();
+      video.style.display = "block";
     }
   </script>
 
