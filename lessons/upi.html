@@ -66,10 +66,10 @@
 
   <div id="lesson-content">Loading lesson...</div>
 
-  <video id="lesson-video" controls style="display:none;">
-    <source id="video-source" src="videos/upi_en.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+ <video id="lesson-video" controls style="display:none;">
+  <source id="video-source" src="" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
   <a href="../index.html">⬅ Back to Home</a>
 
@@ -90,7 +90,7 @@
           console.error(err);
         });
 
-      const videoFile = `videos/upi_${lang}.mp4`;
+      const videoFile = `../videos/upi_${lang}.mp4`;
       source.src = videoFile;
       video.style.display = "block";
       video.load();
