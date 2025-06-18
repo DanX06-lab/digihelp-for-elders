@@ -12,6 +12,7 @@
       background-color: #121212;
       color: #f5f5f5;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
@@ -54,6 +55,15 @@
       margin-bottom: 1rem;
       display: none;
     }
+    .back-home {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .back-home a {
+      color: #66b2ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -63,6 +73,10 @@
     <input type="email" id="email" placeholder="Admin Email" required />
     <input type="password" id="password" placeholder="Password" required />
     <button onclick="login()">Login</button>
+  </div>
+
+  <div class="back-home">
+    <p><a href="index.html">⬅ Back to Home</a></p>
   </div>
 
   <script>
@@ -79,11 +93,5 @@
       }
     }
   </script>
-  <footer>
-    &copy; 2025 DigiHelp | Built by <strong>Souvik Biswas</strong> | Powered by <strong>X Hunters</strong>
-    <div class="back-home">
-      <p><a href="index.html">⬅ Back to Home</a></p>
-    </div>
-  </footer>
 </body>
 </html>
