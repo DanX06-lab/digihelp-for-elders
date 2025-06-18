@@ -46,21 +46,25 @@ def get_video(filename):
 @app.route('/admin/save', methods=['POST'])
 def admin_save():
     data = request.json
-    lesson_id = data.get("id")
-    content = data.get("content")
+    lesson_id = data.get("id", "").strip().lower()
+    content = data.get("content", {})
 
-    if not lesson_id or not content:
-        return jsonify({"error": "Missing fields"}), 400
+    if not lesson_id or not isinstance(content, dict):
+        return jsonify({"error": "Missing or invalid fields"}), 400
 
     lessons = load_lessons()
+    is_new = lesson_id not in lessons
+
     lessons[lesson_id] = content
     save_lessons(lessons)
 
-    return jsonify({"message": "Lesson saved successfully"})
+    message = "New lesson added!" if is_new else "Lesson updated successfully"
+    return jsonify({"message": message})
 
 # Admin: Delete a lesson
 @app.route('/admin/delete/<lesson_id>', methods=['DELETE'])
 def admin_delete(lesson_id):
+    lesson_id = lesson_id.strip().lower()
     lessons = load_lessons()
     if lesson_id in lessons:
         del lessons[lesson_id]

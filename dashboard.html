@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <script>
-  // block unauthorized access
-  if (!localStorage.getItem("admin")) {
-    alert("Unauthorized! Redirecting to login...");
-    window.location.href = "admin.html";
-  }
-</script>
-
+  <script>
+    // block unauthorized access
+    if (!localStorage.getItem("admin")) {
+      alert("Unauthorized! Redirecting to login...");
+      window.location.href = "admin.html";
+    }
+  </script>
 
 <head>
   <meta charset="UTF-8" />
@@ -59,7 +58,7 @@
     .add-form h3 {
       text-align: center;
     }
-    .add-form input, .add-form textarea, .add-form select {
+    .add-form input, .add-form textarea {
       width: 100%;
       padding: 10px;
       margin: 0.5rem 0;
@@ -123,12 +122,7 @@
 
   <div class="add-form">
     <h3>Add / Edit Lesson</h3>
-    <select id="lesson-id">
-      <option value="whatsapp">WhatsApp</option>
-      <option value="call">Phone Call</option>
-      <option value="upi">UPI</option>
-      <option value="safety">Safety</option>
-    </select>
+    <input type="text" id="lesson-id" placeholder="Enter lesson ID (e.g. whatsapp, recharge)" />
     <textarea id="content-en" placeholder="English content"></textarea>
     <textarea id="content-hi" placeholder="Hindi content"></textarea>
     <textarea id="content-bn" placeholder="Bengali content"></textarea>
@@ -137,73 +131,77 @@
 
   <script>
     function editLesson(id) {
-    document.getElementById('lesson-id').value = id;
+      document.getElementById('lesson-id').value = id;
 
-    fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/en`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('content-en').value = data.content || '';
-      });
+      fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/en`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('content-en').value = data.content || '';
+        });
 
-    fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/hi`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('content-hi').value = data.content || '';
-      });
+      fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/hi`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('content-hi').value = data.content || '';
+        });
 
-    fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/bn`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('content-bn').value = data.content || '';
-      });
-  }
+      fetch(`https://digihelp-for-elders.onrender.com/lesson/${id}/bn`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('content-bn').value = data.content || '';
+        });
+    }
 
     function deleteLesson(id) {
-  if (!confirm(`Delete lesson: ${id}?`)) return;
+      if (!confirm(`Delete lesson: ${id}?`)) return;
 
-  fetch(`https://digihelp-for-elders.onrender.com/admin/delete/${id}`, {
-    method: 'DELETE'
-  })
-    .then(res => res.json())
-    .then(data => {
-      alert(data.message || 'Deleted.');
-      location.reload(); // optional: refresh to update the table
-    })
-    .catch(err => {
-      alert('Failed to delete lesson.');
-      console.error(err);
-    });
-}
-
+      fetch(`https://digihelp-for-elders.onrender.com/admin/delete/${id}`, {
+        method: 'DELETE'
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message || 'Deleted.');
+          location.reload();
+        })
+        .catch(err => {
+          alert('Failed to delete lesson.');
+          console.error(err);
+        });
+    }
 
     function saveLesson() {
-  const id = document.getElementById('lesson-id').value;
-  const en = document.getElementById('content-en').value;
-  const hi = document.getElementById('content-hi').value;
-  const bn = document.getElementById('content-bn').value;
+      const id = document.getElementById('lesson-id').value.trim();
+      const en = document.getElementById('content-en').value.trim();
+      const hi = document.getElementById('content-hi').value.trim();
+      const bn = document.getElementById('content-bn').value.trim();
 
-  fetch('https://digihelp-for-elders.onrender.com/admin/save', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      id,
-      content: { en, hi, bn }
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      alert(data.message || 'Saved!');
-    })
-    .catch(err => {
-      alert('Failed to save lesson.');
-      console.error(err);
-    });
-}
+      if (!id) {
+        alert("Please enter a lesson ID.");
+        return;
+      }
 
+      fetch('https://digihelp-for-elders.onrender.com/admin/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id,
+          content: { en, hi, bn }
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message || 'Saved!');
+          location.reload();
+        })
+        .catch(err => {
+          alert('Failed to save lesson.');
+          console.error(err);
+        });
+    }
   </script>
-  
+
   <div style="text-align: center; margin-top: 2rem;">
     <a href="index.html" style="color: #66b2ff; text-decoration: none; font-weight: bold;">
       ⬅ Back to Home
