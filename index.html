@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DigiHelp – Learn Digital Skills</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -114,6 +114,15 @@
       text-decoration: none;
       font-weight: bold;
     }
+    .back-home {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .back-home a {
+      color: #66b2ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -132,23 +141,8 @@
 
   <section id="lessons">
     <h2 style="text-align:center;">Lessons</h2>
-    <div class="lessons">
-      <div class="lesson-card">
-        <h3>WhatsApp</h3>
-        <a href="lessons/whatsapp.html">View Lesson</a>
-      </div>
-      <div class="lesson-card">
-        <h3>Phone Call</h3>
-        <a href="lessons/call.html">View Lesson</a>
-      </div>
-      <div class="lesson-card">
-        <h3>UPI Payment</h3>
-        <a href="lessons/upi.html">View Lesson</a>
-      </div>
-      <div class="lesson-card">
-        <h3>Safety Tips</h3>
-        <a href="lessons/safety.html">View Lesson</a>
-      </div>
+    <div class="lessons" id="lesson-cards">
+      <!-- Cards will be dynamically loaded here -->
     </div>
   </section>
 
@@ -176,5 +170,34 @@
   <footer>
     &copy; 2025 DigiHelp | Built by <strong>Souvik Biswas</strong> | Powered by <strong>X Hunters</strong>
   </footer>
+
+  <script>
+    async function loadLessons() {
+      const container = document.getElementById("lesson-cards");
+      const lang = document.getElementById("language").value;
+      try {
+        const res = await fetch("https://digihelp-for-elders.onrender.com/lessons");
+        const data = await res.json();
+        const lessonIds = data.lessons || [];
+
+        container.innerHTML = "";
+        lessonIds.forEach(id => {
+          const card = document.createElement("div");
+          card.className = "lesson-card";
+          card.innerHTML = `
+            <h3>${id.charAt(0).toUpperCase() + id.slice(1)}</h3>
+            <a href="lessons/${id}.html">View Lesson</a>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        container.innerHTML = "<p style='text-align:center;'>Failed to load lessons.</p>";
+        console.error(err);
+      }
+    }
+
+    document.getElementById("language").addEventListener("change", loadLessons);
+    window.onload = loadLessons;
+  </script>
 </body>
 </html>
